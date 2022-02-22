@@ -16,7 +16,7 @@ function DrawerStack() {
         drawerActiveBackgroundColor:'#aa18ea',
         drawerActiveTintColor:'#fff',
         drawerLabelStyle: {
-          marginLeft: -10
+        marginLeft: -10
         }
     }}>
       <Drawer.Screen name="Home" component={TabStackScreen} options={{
