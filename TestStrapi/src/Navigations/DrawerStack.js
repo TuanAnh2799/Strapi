@@ -5,31 +5,34 @@ import ContactScreen from '../Screens/Contact/Contact';
 import TabStackScreen from './TabStack';
 import CustomDrawerScreen from './CustomDrawer';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const Drawer = createDrawerNavigator();
 
 function DrawerStack() {
   return (
-    <Drawer.Navigator drawerContent={props => <CustomDrawerScreen {...props}/>} screenOptions={{
-        headerShown: false,
-        drawerActiveBackgroundColor:'#aa18ea',
-        drawerActiveTintColor:'#fff',
-        drawerLabelStyle: {
-        marginLeft: -10
-        }
-    }}>
-      <Drawer.Screen name="Home" component={TabStackScreen} options={{
-        drawerIcon: ()=> (
-          <Icon name="home" size={25} color="green"/>
-        )
-      }} />
-      <Drawer.Screen name="Contact" component={ContactScreen} options={{
-        drawerIcon: ()=> (
-          <Icon name="account-box" size={25} color="green"/>
-        )
-      }} />
-    </Drawer.Navigator>
+    <NavigationContainer>
+      <Drawer.Navigator drawerContent={props => <CustomDrawerScreen {...props}/>} screenOptions={{
+          headerShown: false,
+          drawerActiveBackgroundColor:'#aa18ea',
+          drawerActiveTintColor:'#fff',
+          drawerLabelStyle: {
+          marginLeft: -10
+          }
+      }}>
+        <Drawer.Screen name="Home" component={TabStackScreen} options={{
+          drawerIcon: ()=> (
+            <Icon name="home" size={25} color="green"/>
+          )
+        }} />
+        <Drawer.Screen name="Contact" component={ContactScreen} options={{
+          drawerIcon: ()=> (
+            <Icon name="account-box" size={25} color="green"/>
+          )
+        }} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
 }
 

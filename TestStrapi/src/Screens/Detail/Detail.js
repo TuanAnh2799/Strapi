@@ -14,6 +14,7 @@ const DetailScreen = ({navigation, route}) => {
   return (
     <View>
       <Text>DetailScreen {id}</Text>
+      <Text>{data.title}</Text>
       <Button title='Trang chủ' onPress={()=>navigation.navigate("Home")}/>
     </View>
   )

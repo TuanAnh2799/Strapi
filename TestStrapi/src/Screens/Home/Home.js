@@ -1,27 +1,32 @@
 import { Button, FlatList, StyleSheet, Text, View,RefreshControl, TouchableOpacity, TouchableNativeFeedbackBase, TouchableNativeFeedback } from 'react-native'
 import React from 'react';
+import { useQuery, gql } from "@apollo/client";
 import useFetch from '../../API/useFetch';
-import { useState } from 'react';
 
 
-
+const REVIEWS = gql`
+  query GetAll {
+    reviews {
+      id,
+      title,
+      rating,
+      body,
+    }
+  }
+`
 const HomeScreen = ({navigation}) => {
-  let url = 'http://192.168.0.102:1337/reviews';
-
-  const [refreshing, setRefreshing] = useState(false)
+  //let url = 'http://192.168.0.102:1337/reviews';
   
-  const {loading, error, data} = useFetch('http://192.168.0.102:1337/reviews');
-  //console.log(data);
+  //const {loading, error, data} = useFetch('http://192.168.0.102:1337/reviews');
+  
+  const {loading, error, data} = useQuery(REVIEWS);
+  if(data !== undefined)
+  {
+    console.log("show data:",data.reviews);
+  }
 
   if(loading) return <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}><Text>Loading...</Text></View>
-  if(error !== null) return <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}><Text>Error...</Text></View>
-  
-//   const _onRefresh = () => {
-//     console.log('_onRefresh')
-//     setRefreshing(true);
-    
-//     setRefreshing(false);
-// };
+
 
   const renderItem = ({ item }) => (
     <TouchableNativeFeedback onPress={()=>navigation.navigate("Detail",{
@@ -45,10 +50,7 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={{ flex: 1}}>
-    {
-
-    }
-      <FlatList data={data}
+      {data ? <FlatList data={data.reviews}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
@@ -59,6 +61,9 @@ const HomeScreen = ({navigation}) => {
         //     tintColor="#F8852D"/>
         // }
       />
+      :
+      <View style={{flex: 1, justifyContent:'center', alignItems:'center'}}><Text>Error...</Text></View>
+      }
     </View>
     
   )
